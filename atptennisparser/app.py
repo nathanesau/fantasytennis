@@ -4,6 +4,11 @@ from config import Config
 import math
 from pathlib import Path
 import os
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime
+from models import clsTournament, clsPlayer, clsEntrant, clsMatchup
 
 
 def download_archive(archive_year):
@@ -66,15 +71,16 @@ def parse_archive(archive_filename):
     return archive_data
             
 
-def download_draw(draw_year, draw_info):
+def download_draw(draw_info):
     """
     download draw information from archive
-    - return the draw data [{'title', 'link'}]
+    - return the draw data
     """
-    title, link = draw_info.get("title").replace(' ', '_'), draw_info.get("link")
+    title, link, year = draw_info.get("title").replace(' ', '_'), draw_info.get("link"), \
+        draw_info.get("year")
     draw_url = "{}{}".format(Config.BASE_URL, link)
     draw_filename = "{}/draw/{}/{}.html".format(Config.DATA_FOLDER,
-        draw_year, title)
+        year, title)
     request = Request(url=draw_url, headers=Config.HEADERS)
     html = urlopen(request).read()
 
@@ -275,3 +281,40 @@ def parse_draw(draw_filename):
     draw_data["players"] = players
 
     return draw_data
+
+
+def write_draw_to_db(draw_data, draw_info):
+    """
+    write draw to postgres db (draw_data from parse_draw)
+    """
+    engine = create_engine(Config.SQLALCHEMY_DATABASE_URI, echo=True)
+    Base = declarative_base()
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    Session.configure(bind=engine)
+    session = Session()
+
+    # tournaments
+    #tournaments = [clsTournament(Base)(name=draw_info["title"],
+    #    start_date=datetime.strptime(draw_data["dates"][0], '%Y.%m.%d'),
+    #    end_date=datetime.strptime(draw_data["dates"][1], '%Y.%m.%d'))]
+
+    playerType = clsPlayer(Base)
+    player_query = session.query(playerType)
+
+    # players
+    players = []
+    for player in draw_data["players"]:
+        name, country_code = player["name"], player["country_code"]
+        if player_query.filter_by(name=name).first() is None:
+            if name is None or name == 'bye':
+                continue
+            players.append(playerType(name=name, country_code=country_code))
+
+    #objects = [clsTournament(Base)(name=draw_info["title"],
+    #    start_date=datetime.strptime(draw_data["dates"][0], '%Y.%m.%d'),
+    #    end_date=datetime.strptime(draw_data["dates"][1], '%Y.%m.%d'))]
+    
+    session.bulk_save_objects(players)
+
+    session.commit()

@@ -35,16 +35,18 @@ class TestApp(TestCase):
     def test_download_draw(self):
         # 2019 - ATP Masters 1000 Canada
         draw_info = {'title': 'ATP Masters 1000 Canada',
-            'link': '/en/scores/archive/toronto/421/2018/draws?matchtype=singles'}
-        draw_filename = app.download_draw(2019, draw_info)
+            'link': '/en/scores/archive/toronto/421/2018/draws?matchtype=singles',
+            'year': 2019}
+        draw_filename = app.download_draw(draw_info)
         f = open(draw_filename, 'r')
         data = f.read()
         assert(data != None)
 
         # 2018 - Shenzhen
         draw_info = {'title': 'Shenzhen',
-            'link': '/en/scores/archive/shenzhen/6967/2018/draws?matchtype=singles'}
-        draw_filename = app.download_draw(2018, draw_info)
+            'link': '/en/scores/archive/shenzhen/6967/2018/draws?matchtype=singles',
+            'year': 2018}
+        draw_filename = app.download_draw(draw_info)
         f = open(draw_filename, 'r')
         data = f.read()
         assert(data != None)
@@ -61,3 +63,10 @@ class TestApp(TestCase):
             TestApp.RESOURCE_FOLDER)
         draw_data = app.parse_draw(draw_filename)
         print(draw_data)
+
+    def test_write_draw_to_db(self):
+        # 2019 - ATP Masters 1000 Canada
+        draw_filename = "{}/draw/2019/ATP_Masters_1000_Canada.html".format(
+            TestApp.RESOURCE_FOLDER)
+        draw_data = app.parse_draw(draw_filename)
+        app.write_draw_to_db(draw_data, {'title': 'ATP Masters 1000 Canada'})
