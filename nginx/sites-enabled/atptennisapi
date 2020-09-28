@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    listen 443;
+    server_name _;
+
+    location / {
+        proxy_pass https://host.docker.internal:5000;
+    }
+}
