@@ -9,13 +9,9 @@ API reference:
 API tests:
 
 ```bash
-# {"players":[{"country_code":"SWI","id":1,"name":"Roger Federer"},{"country_code":"SPA","id":2,"name":"Rafael Nadal"}]}
-curl https://atptennisapi.freeddns.org/api/v1/players
-curl http://localhost:5000/api/v1/players
-
-# {"tournaments":[{"country_code":"SWI","id":1,"name":"Roger Federer"},{"country_code":"SPA","id":2,"name":"Rafael Nadal"}]}
-curl https://atptennisapi.freeddns.org/api/v1/tournaments
-curl https://localhost:5000/api/v1/tournaments
+curl "https://atptennisapi.freeddns.org/api/v1/players"
+curl "https://atptennisapi.freeddns.org/api/v1/tournaments"
+curl "https://atptennisapi.freeddns.org/api/v1/matchups?tournament_name=Beijing&tournament_start_date=Mon%2C%2003%20Oct%202016%2000%3A00%3A00%20GMT"
 ```
 
 Docker instructions:
