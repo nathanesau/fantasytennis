@@ -57,3 +57,26 @@ class Matchup(db.Model):
 
     def __repr__(self):
         return '<Matchup {}>'.format(self.matchup)
+
+
+class ArchiveParseHistory(db.Model):
+
+    __tablename__ = "archiveparsehistory"
+    __table_args__ = {"schema":"atptennis"}
+
+    id = db.Column(db.Integer, primary_key=True)
+    archive_year = db.Column(db.Integer)
+    last_update = db.Column(db.DateTime)
+
+
+class DrawParseHistory(db.Model):
+
+    __tablename__ = "drawparsehistory"
+    __table_args__ = {"schema":"atptennis"}
+
+    id = db.Column(db.Integer, primary_key=True)
+    tournament_title = db.Column(db.String)
+    tournament_link = db.Column(db.String)
+    tournament_year = db.Column(db.Integer)
+    tournament_start_date = db.Column(db.DateTime)
+    last_update = db.Column(db.DateTime)

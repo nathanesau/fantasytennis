@@ -32,6 +32,17 @@ class TestApp(TestCase):
         archive_data = app.parse_archive(archive_filename)
         print(archive_data)
 
+    def test_write_archive_to_db(self):
+        # 2019
+        archive_filename = "{}/archive/2019.html".format(TestApp.RESOURCE_FOLDER)
+        archive_data = app.parse_archive(archive_filename)
+        app.write_archive_to_db(archive_data, {"year": 2019})
+
+        # 2018
+        archive_filename = "{}/archive/2018.html".format(TestApp.RESOURCE_FOLDER)
+        archive_data = app.parse_archive(archive_filename)
+        app.write_archive_to_db(archive_data, {"year": 2018})
+
     def test_download_draw(self):
         # 2019 - ATP Masters 1000 Canada
         draw_info = {'title': 'ATP Masters 1000 Canada',
@@ -70,3 +81,12 @@ class TestApp(TestCase):
             TestApp.RESOURCE_FOLDER)
         draw_data = app.parse_draw(draw_filename)
         app.write_draw_to_db(draw_data, {'title': 'ATP Masters 1000 Canada'})
+
+        # 2018 - Shenzhen
+        draw_filename = "{}/draw/2018/Shenzhen.html".format(
+            TestApp.RESOURCE_FOLDER)
+        draw_data = app.parse_draw(draw_filename)
+        app.write_draw_to_db(draw_data, {'title': 'Shenzhen'})
+
+    def test_update_db(self):
+        app.update_db()

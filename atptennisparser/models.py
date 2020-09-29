@@ -45,3 +45,26 @@ def clsMatchup(Base):
         round_num = Column(Integer)
         winner_id = Column(Integer, ForeignKey('atptennis.player.id'))
     return Matchup
+
+
+def clsDrawParseHistory(Base):
+    class DrawParseHistory(Base):
+        __tablename__ = "drawparsehistory"
+        __table_args__ = {"schema": "atptennis"}
+        id = Column(Integer, primary_key=True)
+        tournament_title = Column(String)
+        tournament_link = Column(String)
+        tournament_year = Column(Integer)
+        tournament_start_date = Column(DateTime)
+        last_update = Column(DateTime)
+    return DrawParseHistory
+
+
+def clsArchiveParseHistory(Base):
+    class ArchiveParseHistory(Base):
+        __tablename__ = "archiveparsehistory"
+        __table_args__ = {"schema": "atptennis"}
+        id = Column(Integer, primary_key=True)
+        archive_year = Column(Integer)
+        last_update = Column(DateTime)
+    return ArchiveParseHistory
