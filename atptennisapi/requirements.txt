@@ -1,8 +1,6 @@
 Flask==1.1.1
+flask_migrate==2.5.3
 flask_sqlalchemy==2.4.4
-APScheduler==3.6.3
 redis==3.5.3
 flask-cors==3.0.8
 psycopg2==2.8.6
-celery==5.0.0
-pyOpenSSL==19.1.0

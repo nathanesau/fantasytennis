@@ -11,11 +11,13 @@ RUN venv/bin/pip install gunicorn
 
 COPY app app
 COPY app.py ./
+COPY config.py ./
 COPY boot.sh ./
 
 RUN chmod +x boot.sh
 
 ENV FLASK_APP app.py
 
+# start service
 EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]
