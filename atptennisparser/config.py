@@ -1,15 +1,14 @@
 import os
+import platform
 
 class Config:
-    #SERVICE_LOG_FILE = "D:/logs/atptennisparser_service_log.txt"
-    SERVICE_LOG_FILE = "/root/logs/atptennisparser_service_log.txt"
+    SERVICE_LOG = "/root/logs/atptps.txt" if platform.system() == 'Linux' else "D:/logs/atptps.txt"
     BASE_URL = "https://www.atptour.com"
     ARCHIVE_URL = "https://www.atptour.com/en/scores/results-archive"
-    #DATA_FOLDER = "D:/atptourdata"
-    DATA_FOLDER = "/root/data"
-    HEADERS = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) Chrome/41.0.2228.0 Safari/537.3'
-    }
+    DATA_FOLDER = "/root/data" if platform.system() == 'Linux' else "D:/atptourdata"
+    HEADERS = {"userAgent": 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+    CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver' if platform.system() == 'Linux' else \
+        'D:\chromedriver_win32\chromedriver.exe'
     SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
     MIN_YEAR = 2010
 

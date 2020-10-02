@@ -9,6 +9,8 @@ class TestApp(TestCase):
         os.path.dirname(os.path.realpath(__file__)))
 
     def test_download_archive(self):
+        return # skip to avoid spamming website
+
         # 2019
         archive_filename = app.download_archive(2019)
         f = open(archive_filename, 'r')
@@ -44,6 +46,8 @@ class TestApp(TestCase):
         app.write_archive_to_db(archive_data, {"year": 2018})
 
     def test_download_draw(self):
+        return # skip to avoid spamming website
+
         # 2019 - ATP Masters 1000 Canada
         draw_info = {'title': 'ATP Masters 1000 Canada',
             'link': '/en/scores/archive/toronto/421/2018/draws?matchtype=singles',

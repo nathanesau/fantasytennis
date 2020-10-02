@@ -1,6 +1,6 @@
-from app import update_db
+# service to parse data from atptour website
 
-# simple linux service to backup redis cache
+from app import update_db
 
 from datetime import datetime
 import os
@@ -12,16 +12,6 @@ from config import Config
 
 import logging
 from logging.handlers import RotatingFileHandler
-
-def backup_redis_task():
-    logger.info("running backup redis task at {}".format(datetime.now()))
-
-    ret_code = os.system("docker exec pastebin-redis redis-cli -a {} --rdb /data/dump.rdb".format(
-        os.environ['REDIS_PASS']))
-    if ret_code == 0:
-        logger.info("backup successful")
-    else:
-        logger.info("unable to backup data")
 
 # create logger
 logger = logging.getLogger('logger')
@@ -37,7 +27,7 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 # create file handler and set level to debug
-fh = RotatingFileHandler(Config.SERVICE_LOG_FILE, maxBytes=2000, backupCount=1)
+fh = RotatingFileHandler(Config.SERVICE_LOG, maxBytes=2000, backupCount=1)
 fh.setLevel(logging.DEBUG)
 fh.setFormatter(formatter)
 logger.addHandler(fh)

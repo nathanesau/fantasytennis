@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from urllib.request import urlopen, Request
 from config import Config
 import math
 from pathlib import Path
@@ -14,6 +13,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from models import clsTournament, clsPlayer, clsEntrant, clsMatchup, \
         clsDrawParseHistory, clsArchiveParseHistory
+from download import download_html_file
 
 
 def get_logger():
@@ -34,17 +34,8 @@ def download_archive(archive_year):
     archive_url = "{}?year={}".format(Config.ARCHIVE_URL, archive_year)
     archive_filename = "{}/archive/{}.html".format(Config.DATA_FOLDER,
         archive_year)
-    request = Request(url=archive_url, headers=Config.HEADERS)
-    html = urlopen(request).read()
 
-    # create folder if it does not exist
-    archive_folder = Path(r'{}'.format(archive_filename))
-    os.makedirs(str(archive_folder.parent), exist_ok=True)
-
-    # write html content to file
-    html_file = open(archive_filename, "w")
-    html_file.write(html.decode("utf-8"))
-    html_file.close()
+    download_html_file(archive_url, archive_filename)
 
     return archive_filename
 
@@ -99,17 +90,8 @@ def download_draw(draw_info):
     draw_url = "{}{}".format(Config.BASE_URL, link)
     draw_filename = "{}/draw/{}/{}.html".format(Config.DATA_FOLDER,
         year, title)
-    request = Request(url=draw_url, headers=Config.HEADERS)
-    html = urlopen(request).read()
 
-    # create folder if it does not exist
-    draw_folder = Path(r'{}'.format(draw_filename))
-    os.makedirs(str(draw_folder.parent), exist_ok=True)
-
-    # write html content to file
-    html_file = open(draw_filename, "w")
-    html_file.write(html.decode("utf-8"))
-    html_file.close()
+    download_html_file(draw_url, draw_filename)
 
     return draw_filename
 
@@ -286,6 +268,12 @@ def parse_draw(draw_filename):
     # dates
     date_tag = soup.find_all('span', {'class': 'tourney-dates'})[0]
     dates = date_tag.text.strip().replace('\n', '').replace(' - ', ' ').split(' ')
+
+    # could happen for 2020, etc.
+    if len(dates) > 2:
+        dates = dates[-2:]
+        dates = [d.replace('\\n', '') for d in dates]
+
     draw_data["dates"] = dates
 
     # matchups
