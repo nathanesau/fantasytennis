@@ -1,0 +1,89 @@
+.vtb-item {
+  display: flex;
+  flex-direction: row-reverse;
+  font-family: monospace;
+  white-space:nowrap;
+}
+.vtb-item p {
+  padding: 20px;
+  margin: 0;
+  background-color: #999999;
+}
+.vtb-item-parent {
+  position: relative;
+  margin-left: 50px;
+  display: flex;
+  align-items: center;
+}
+.vtb-item-players {
+  flex-direction: column;
+  background-color: #999999;
+  margin: 0;
+  color: white;
+}
+.vtb-item-players .player {
+  padding: 10px;
+}
+.vtb-item-players .winner {
+  background-color: darkgreen;
+}
+.vtb-item-players .defeated {
+  background-color: firebrick;
+}
+.vtb-item-players .winner.highlight {
+  background-color: darkseagreen;
+}
+.vtb-item-players .defeated.highlight {
+  background-color: indianred;
+}
+.vtb-item-parent:after {
+  position: absolute;
+  content: "";
+  width: 25px;
+  height: 2px;
+  left: 0;
+  top: 50%;
+  background-color: gray;
+  transform: translateX(-100%);
+}
+.vtb-item-children {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.vtb-item-child {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.vtb-item-child:before {
+  content: "";
+  position: absolute;
+  background-color: gray;
+  right: 0;
+  top: 50%;
+  transform: translateX(100%);
+  width: 25px;
+  height: 2px;
+}
+.vtb-item-child:after {
+  content: "";
+  position: absolute;
+  background-color: gray;
+  right: -25px;
+  height: calc(50% + 22px);
+  width: 2px;
+  top: 50%;
+}
+.vtb-item-child:last-child:after {
+  transform: translateY(-100%);
+}
+.vtb-item-child:only-child:after {
+  display: none;
+}
+.vtb-wrapper {
+  display: flex;
+}

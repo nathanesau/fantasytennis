@@ -1,0 +1,10 @@
+<div *ngIf="player">
+  <h2>Details</h2>
+  <ul>
+    <li>Id: {{ player.id }}</li>
+    <li>Name: {{ player.name }}</li>    
+    <li>Country: {{ player.country }}</li>
+  </ul>
+</div>
+
+<button (click)="goBack()">go back</button>

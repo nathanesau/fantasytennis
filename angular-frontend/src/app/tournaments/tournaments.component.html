@@ -1,0 +1,55 @@
+<div *ngIf="dataSource.data.length == 0">
+  <p>
+    Loading...
+  </p>
+</div>
+<div class="example-header">
+  <mat-form-field>
+    <input placeholder="Filter" matInput (keyup)="applyFilter($event.target.value)" />
+  </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
+    </ng-container>
+
+    <!-- Start Date -->
+    <ng-container matColumnDef="start">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Start Date
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.start }} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a routerLink="/tournament/{{ row.id }}">
+          {{ row.name }}
+        </a>
+      </mat-cell>
+    </ng-container>
+
+    <!-- End Date -->
+    <ng-container matColumnDef="end">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        End Date
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.end">
+        {{ row.end }}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

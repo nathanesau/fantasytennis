@@ -1,0 +1,17 @@
+<div *ngIf="tournament">
+  <h2>{{ tournament.name }}</h2>
+
+  <ul>
+    <li>Start Date: {{ getShortDate(tournament.start) }}</li>
+    <li>End Date: {{ getShortDate(tournament.end) }}</li>
+  </ul>
+</div>
+
+<button (click)="goBack()">go back</button>
+
+<div *ngIf="tournament">
+  <app-bracket
+    [tournamentName]="tournament.name"
+    [tournamentStartDate]="tournament.start"
+  ></app-bracket>
+</div>

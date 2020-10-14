@@ -1,0 +1,3 @@
+<!--html is generated inside typescript class-->
+<div *ngIf="htmlBracket" class="vtb-wrapper" [innerHTML]="htmlBracket | sanitizeHtml"></div>
+<div *ngIf="!htmlBracket"><p>No bracket available</p></div>
