@@ -17,44 +17,61 @@ import shutil
 def index():
     return "Hello, World"
 
-@app.route('/api/v1/players')
+
+@app.route('/players')
 @cross_origin()
 def get_players():
     players = Player.query.all()
-    return jsonify(players=[{"id": i.id, "name": i.name, 
-        "country_code": i.country_code } for i in players]), 200
+    return jsonify([{"id": i.id, "name": i.name,
+                     "country": i.country_code} for i in players if i.name != 'bye']), 200
 
 
-@app.route('/api/v1/tournaments')
+@app.route('/player')
+@cross_origin()
+def get_player():
+    player = Player.query.filter_by(id=request.args.get("id")).first()
+    return jsonify({"id": player.id, "name": player.name,
+                    "country": player.country_code}), 200
+
+
+@app.route('/tournaments')
 @cross_origin()
 def get_tournaments():
     tournaments = Tournament.query.all()
-    return jsonify(tournaments=[{"id": i.id, "name": i.name,
-        "start_date": i.start_date, "end_date": i.end_date }
-        for i in tournaments]), 200
+    return jsonify([{"id": i.id, "name": i.name,
+                     "start": i.start_date, "end": i.end_date}
+                    for i in tournaments]), 200
 
 
-@app.route('/api/v1/matchups')
+@app.route('/tournament')
+@cross_origin()
+def get_tournament():
+    tournament = Tournament.query.filter_by(id=request.args.get("id")).first()
+    return jsonify({"id": tournament.id, "name": tournament.name,
+                    "start": tournament.start_date, "end": tournament.end_date}), 200
+
+
+@app.route('/matchups')
 @cross_origin()
 def get_matchups():
     tournament_name = request.args.get("tournament_name")
     tournament_start_date = datetime.strptime(request.args.get("tournament_start_date"),
-        '%a, %d %b %Y %H:%M:%S %Z')
+                                              '%a, %d %b %Y %H:%M:%S %Z')
 
     tournament = Tournament.query.filter_by(name=tournament_name,
-        start_date=tournament_start_date).first()
+                                            start_date=tournament_start_date).first()
 
     if tournament is None:
         abort(400)
 
     matchups = Matchup.query.filter_by(tournament_id=tournament.id)
-    
+
     matchups_list = []
     for matchup in matchups:
         player1 = Player.query.filter_by(id=matchup.player1_id).first().name
         player2 = Player.query.filter_by(id=matchup.player2_id).first().name
         winner = Player.query.filter_by(id=matchup.winner_id).first().name
         matchups_list.append({"player1": player1, "player2": player2,
-            "round_num": matchup.round_num, "winner": winner })
+                              "round": matchup.round_num, "winner": winner})
 
-    return jsonify(matchups=matchups_list), 200
+    return jsonify(matchups_list), 200

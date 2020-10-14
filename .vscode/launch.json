@@ -12,6 +12,17 @@
             "console": "integratedTerminal"
         },
         {
+            "type": "chrome",
+            "request": "launch",
+            "name": "vuejs: chrome",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}/atptennisfrontend/src",
+            "breakOnLoad": true,
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/*"
+            }
+        },
+        {
             "name": "atptennisparser: service",
             "type": "python",
             "request": "launch",

@@ -1,17 +1,13 @@
 # atptennisapi
 
-API reference:
-
-| Endpoint | Method |
-| -------- | ------ |
-| /api/v1/players | GET | 
-
 API tests:
 
 ```bash
-curl "https://atptennisapi.freeddns.org/api/v1/players"
-curl "https://atptennisapi.freeddns.org/api/v1/tournaments"
-curl "https://atptennisapi.freeddns.org/api/v1/matchups?tournament_name=Beijing&tournament_start_date=Mon%2C%2003%20Oct%202016%2000%3A00%3A00%20GMT"
+curl "https://atptennisapi.freeddns.org/players"
+curl "https://atptennisapi.freeddns.org/player?id=1"
+curl "https://atptennisapi.freeddns.org/tournaments"
+curl "https://atptennisapi.freeddns.org/tournament?id=1"
+curl "https://atptennisapi.freeddns.org/matchups?tournament_name=Beijing&tournament_start_date=Mon%2C%2003%20Oct%202016%2000%3A00%3A00%20GMT"
 ```
 
 Docker instructions:
