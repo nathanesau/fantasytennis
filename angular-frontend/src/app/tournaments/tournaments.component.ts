@@ -22,24 +22,10 @@ export class TournamentsComponent implements OnInit {
 
   constructor(private tournamentsService: TournamentsService) { }
 
-  sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async poll() {
-    var att = 1;
-    while (this.dataSource.data.length == 0 && att < 5) {
-      await this.sleep(5000);
-      this.getTournaments();
-      att += 1;
-    }
-  }
-
   ngOnInit() {
     console.log('initializing tournaments');
     this.dataSource = new MatTableDataSource();
     this.getTournaments();
-    this.poll();
   }
 
   ngAfterViewInit() {
