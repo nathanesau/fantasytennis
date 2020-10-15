@@ -1,6 +1,6 @@
 # fantasytennis
 
-site is live at https://github.com/nathanesau/fantasytennis.github.io
+site is live at https://fantasy-tennis-283012.web.app/
 
 deploy site to gh pages:
 
