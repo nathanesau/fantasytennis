@@ -1,6 +1,6 @@
 # fantasytennis
 
-site is live at https://fantasy-tennis-283012.web.app/
+site is live at https://www.fantasytennis.ca
 
 deploy site to gh pages:
 
