@@ -22,24 +22,10 @@ export class PlayersComponent implements OnInit {
 
   constructor(private playersService: PlayersService) { }
 
-  sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async poll() {
-    var att = 1;
-    while (this.dataSource.data.length == 0 && att < 5) {
-      await this.sleep(5000);
-      this.getPlayers();
-      att += 1;
-    }
-  }
-
   ngOnInit() {
     console.log('initializing players');
     this.dataSource = new MatTableDataSource();
     this.getPlayers();
-    this.poll();
   }
 
   ngAfterViewInit() {
