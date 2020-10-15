@@ -1,6 +1,6 @@
 # fantasytennis
 
-site is live at https://www.fantasytennis.ca
+site is live at https://fantasytennis-firebase.web.app/dashboard
 
 deploy site to gh pages:
 
