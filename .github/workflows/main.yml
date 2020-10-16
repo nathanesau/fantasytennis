@@ -18,11 +18,6 @@ jobs:
       with:
         node-version: '10.x'
     - name: Build
-      run: |
-         cd angular-frontend && npm install -g @angular/cli
-         npm install
-         ng build --prod --base-href=""https://nathanesau.github.io/fantasytennis/"
+      run: cd angular-frontend && npm install -g @angular/cli && npm install && ng build --prod --base-href=""https://nathanesau.github.io/fantasytennis/"
     - name: Deploy
-      run: |
-         npm install -g npx
-         npx angular-cli-ghpages --dir=dist/angular-fantasytennis
+      run: npm install -g npx && npx angular-cli-ghpages --dir=dist/angular-fantasytennis
