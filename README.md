@@ -1,7 +1,6 @@
 # fantasytennis
 
-site is live at https://fantasytennis-firebase.web.app/dashboard
-
+site is live at https://nathanesau.github.io/fantasytennis
 deploy site to gh pages:
 
 ```bash
