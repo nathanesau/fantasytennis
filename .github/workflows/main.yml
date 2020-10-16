@@ -20,4 +20,4 @@ jobs:
     - name: Build
       run: cd angular-frontend && npm install -g @angular/cli && npm install && ng build --prod --base-href="https://nathanesau.github.io/fantasytennis/"
     - name: Deploy
-      run: npm install -g npx && npx angular-cli-ghpages --dir=dist/angular-fantasytennis
+      run: cd angular-frontend && echo "fantasytennis.ca" > dist/angular-fantasytennis/CNAME && npx angular-cli-ghpages --dir=dist/angular-fantasytennis
